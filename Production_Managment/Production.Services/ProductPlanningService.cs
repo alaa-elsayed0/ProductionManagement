@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Production.Core.DataTransferObject;
+using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
 
@@ -17,29 +18,58 @@ namespace Production.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<ProductPlanningDto> CreateAsync(ProductPlanningDto plan)
+        public async Task<ProductPlanningDto> CreateAsync(ProductPlanningDto plan)
         {
-            throw new NotImplementedException();
+            var mappedplan = _mapper.Map<ProductPlanning>(plan);
+
+            // Add the product entity to the repository
+            await _unitOfWork.Repository<ProductPlanning, int>().AddAysnc(mappedplan);
+
+            // Commit the changes to the database
+            await _unitOfWork.CompleteAsync();
+
+            return _mapper.Map<ProductPlanningDto>(mappedplan);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingPlan = await _unitOfWork.Repository<ProductPlanning, int>().GetAsync(id);
+
+            if (existingPlan == null)
+                throw new Exception("Product not found.");
+
+            // Remove the product entity from the repository
+            _unitOfWork.Repository<ProductPlanning, int>().Delete(existingPlan);
+            await _unitOfWork.CompleteAsync();
         }
 
-        public Task<IEnumerable<ProductPlanningDto>> GetAllProducts()
+        public async Task<IEnumerable<ProductPlanningDto>> GetAllPlans()
         {
-            throw new NotImplementedException();
+            var plans = await _unitOfWork.Repository<ProductPlanning, int>().GetAllAsync();
+            var mappedPlans = _mapper.Map<IReadOnlyList<ProductPlanningDto>>(plans);
+
+            return mappedPlans;
         }
 
-        public Task<ProductPlanningDto> GetByIdAsync(int id)
+        public async Task<ProductPlanningDto> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var plan = await _unitOfWork.Repository<ProductPlanning, int>().GetAsync(id);
+            return _mapper.Map<ProductPlanningDto>(plan);
         }
 
-        public Task<ProductPlanningDto> UpdateAsync(ProductPlanningDto plan)
+        public async Task<ProductPlanningDto> UpdateAsync(ProductPlanningDto plan)
         {
-            throw new NotImplementedException();
+            var existingPlan = await _unitOfWork.Repository<ProductPlanning, int>().GetAsync(plan.PlanningId);
+            if (existingPlan == null)
+                throw new Exception("Product not found.");
+
+            _mapper.Map(plan, existingPlan);
+
+            _unitOfWork.Repository<ProductPlanning, int>().Update(existingPlan);
+
+            await _unitOfWork.CompleteAsync();
+
+            return _mapper.Map<ProductPlanningDto>(existingPlan);
         }
     }
 }

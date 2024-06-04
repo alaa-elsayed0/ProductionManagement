@@ -8,6 +8,6 @@ namespace Production.Core.Interface.Service
         Task<ProductPlanningDto> UpdateAsync(ProductPlanningDto plan);
         Task DeleteAsync(int id);
         Task<ProductPlanningDto> GetByIdAsync(int id);
-        Task<IEnumerable<ProductPlanningDto>> GetAllProducts();
+        Task<IEnumerable<ProductPlanningDto>> GetAllPlans();
     }
 }
