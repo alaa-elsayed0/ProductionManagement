@@ -3,7 +3,8 @@ using Production.Core.DataTransferObject;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
-using Production.Reprository.Repositories;
+using Production.Core.Specifications.Tracking;
+using Production.Reprository.Specifications.Track;
 
 namespace Production.Services
 {
@@ -11,11 +12,13 @@ namespace Production.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<Tracking , int> _repository;
 
-        public TrackingService(IMapper mapper, IUnitOfWork unitOfWork)
+        public TrackingService(IMapper mapper, IUnitOfWork unitOfWork, IGenericRepository<Tracking, int> repository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
 
@@ -70,5 +73,10 @@ namespace Production.Services
             return _mapper.Map<TrackingDto>(tracking);
         }
 
+        public async Task<IEnumerable<Tracking>> Search(TrackingSpecificationParams specificationParams)
+        {
+            var spec = new TrackingSpecification(specificationParams);
+            return await _repository.GetAllWithSpecAsync(spec);
+        }
     }
 }

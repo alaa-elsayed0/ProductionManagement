@@ -32,6 +32,8 @@ builder.Services.AddScoped<IStopRecordService, StopRecordService>();
 builder.Services.AddScoped<IGenericRepository<Product, int>, GenericRepository<Product, int>>();
 builder.Services.AddScoped<IGenericRepository<ProductPlanning, int>, GenericRepository<ProductPlanning, int>>();
 builder.Services.AddScoped<IGenericRepository<ProductionOperation, int>, GenericRepository<ProductionOperation, int>>();
+builder.Services.AddScoped<IGenericRepository<StopRecords, int>, GenericRepository<StopRecords, int>>();
+builder.Services.AddScoped<IGenericRepository<Tracking, int>, GenericRepository<Tracking, int>>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

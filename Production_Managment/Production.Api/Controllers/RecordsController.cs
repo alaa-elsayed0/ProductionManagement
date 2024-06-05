@@ -2,11 +2,14 @@
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications.Operation;
+using Production.Core.Specifications.StopRecords;
+using Production.Services;
 
 namespace Production.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
     public class RecordsController : ControllerBase
     {
         private readonly IStopRecordService _stopRecordService;
@@ -79,6 +82,17 @@ namespace Production.Api.Controllers
                 return NotFound(ex.Message);
             }
 
+        }
+
+
+        [HttpGet("Search")]
+        public async Task<ActionResult> Search([FromQuery] RecordsSpecificationParams searchParams)
+        {
+            if (string.IsNullOrWhiteSpace(searchParams.Search)) return Ok(BadRequest("Please Enter Product Name"));
+
+            var products = await _stopRecordService.Search(searchParams);
+
+            return Ok(products);
         }
     }
 }

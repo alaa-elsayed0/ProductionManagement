@@ -8,5 +8,8 @@
 
         public ICollection<ProductPlanning> ProductPlannings { get; set; }
         public ProductPlanning? ProductPlanning { get; set; }
+
+        public string ProdactName { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
-using Production.Core.Entities;
 using Production.Core.Interface.Service;
 using Production.Core.Specifications.Operation;
-using Production.Core.Specifications.Planning;
-using Production.Services;
 
 namespace Production.Api.Controllers
 {

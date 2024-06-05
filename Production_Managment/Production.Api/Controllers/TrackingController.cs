@@ -2,6 +2,8 @@
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications.Operation;
+using Production.Core.Specifications.Tracking;
 using Production.Services;
 
 namespace Production.Api.Controllers
@@ -11,7 +13,7 @@ namespace Production.Api.Controllers
     public class TrackingController : ControllerBase
     {
         private readonly ITrackingService _trackingService;
-
+         
         public TrackingController(ITrackingService trackingService)
         {
             _trackingService = trackingService;
@@ -80,6 +82,17 @@ namespace Production.Api.Controllers
                 return NotFound(ex.Message);
             }
 
+        }
+
+
+        [HttpGet("Search")]
+        public async Task<ActionResult> Search([FromQuery] TrackingSpecificationParams searchParams)
+        {
+            if (string.IsNullOrWhiteSpace(searchParams.Search)) return Ok(BadRequest("Please Enter Product Name"));
+
+            var products = await _trackingService.Search(searchParams);
+
+            return Ok(products);
         }
     }
 }

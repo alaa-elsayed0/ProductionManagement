@@ -3,7 +3,8 @@ using Production.Core.DataTransferObject;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
-using Production.Reprository.Repositories;
+using Production.Core.Specifications.StopRecords;
+using Production.Reprository.Specifications.Record;
 
 namespace Production.Services
 {
@@ -11,11 +12,14 @@ namespace Production.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<StopRecords, int> _repository;
 
-        public StopRecordService(IMapper mapper, IUnitOfWork unitOfWork)
+
+        public StopRecordService(IMapper mapper, IUnitOfWork unitOfWork, IGenericRepository<StopRecords, int> repository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
         public async Task<StopRecordsDto> CreateAsync(StopRecordsDto records)
@@ -70,5 +74,10 @@ namespace Production.Services
             return _mapper.Map<StopRecordsDto>(record);
         }
 
+        public async Task<IEnumerable<StopRecords>> Search(RecordsSpecificationParams specificationParams)
+        {
+            var spec = new StopRecordsSpecification(specificationParams);
+            return await _repository.GetAllWithSpecAsync(spec);
+        }
     }
 }
