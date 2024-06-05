@@ -1,4 +1,6 @@
 ﻿using Production.Core.DataTransferObject;
+using Production.Core.Entities;
+using Production.Core.Specifications.Operation;
 
 namespace Production.Core.Interface.Service
 {
@@ -9,5 +11,7 @@ namespace Production.Core.Interface.Service
         Task DeleteAsync(int id);
         Task<ProductionOperationsDto> GetByIdAsync(int id);
         Task<IEnumerable<ProductionOperationsDto>> GetAllProducts();
+
+        Task<IEnumerable<ProductionOperation>> Search(OperationSpecificationParameters specParams);
     }
 }

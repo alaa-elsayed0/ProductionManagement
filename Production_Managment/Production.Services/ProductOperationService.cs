@@ -3,6 +3,8 @@ using Production.Core.DataTransferObject;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications.Operation;
+using Production.Reprository.Specifications.Operation;
 
 namespace Production.Services
 {
@@ -10,11 +12,13 @@ namespace Production.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<ProductionOperation, int> _reptository;
 
-        public ProductOperationService(IMapper mapper, IUnitOfWork unitOfWork)
+        public ProductOperationService(IMapper mapper, IUnitOfWork unitOfWork, IGenericRepository<ProductionOperation, int> reptository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _reptository = reptository;
         }
 
         public async Task<ProductionOperationsDto> CreateAsync(ProductionOperationsDto operation)
@@ -70,5 +74,10 @@ namespace Production.Services
             return _mapper.Map<ProductionOperationsDto>(operations);
         }
 
+        public async Task<IEnumerable<ProductionOperation>> Search(OperationSpecificationParameters specParams)
+        {
+            var spec = new OperationSpecification(specParams);
+            return await _reptository.GetAllWithSpecAsync(spec);
+        }
     }
 }

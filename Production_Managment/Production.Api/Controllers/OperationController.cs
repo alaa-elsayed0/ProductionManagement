@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
+using Production.Core.Entities;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications.Operation;
+using Production.Core.Specifications.Planning;
 using Production.Services;
 
 namespace Production.Api.Controllers
@@ -81,6 +84,17 @@ namespace Production.Api.Controllers
                 return NotFound(ex.Message);
             }
 
+        }
+
+
+        [HttpGet("Search")]
+        public async Task<ActionResult> Search([FromQuery] OperationSpecificationParameters searchParams)
+        {
+            if (string.IsNullOrWhiteSpace(searchParams.Search)) return Ok(BadRequest("Please Enter Operation Name"));
+
+            var products = await _productOperationService.Search(searchParams);
+
+            return Ok(products);
         }
     }
 }
