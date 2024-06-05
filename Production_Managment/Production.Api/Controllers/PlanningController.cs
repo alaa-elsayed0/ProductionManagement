@@ -2,6 +2,8 @@
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications;
+using Production.Core.Specifications.Planning;
 using Production.Services;
 
 namespace Production.Api.Controllers
@@ -18,20 +20,20 @@ namespace Production.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetProducts()
+        public async Task<ActionResult> GetPlans()
         {
             return Ok(await _productPlanning.GetAllPlans());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetProduct(int id)
+        public async Task<ActionResult> GetPlan(int id)
         {
             var product = await _productPlanning.GetByIdAsync(id);
-            return product is not null ? Ok(product) : NotFound(new ApiResponse(404, $"Product with id : {id} Not Found"));
+            return product is not null ? Ok(product) : NotFound(new ApiResponse(404, $"Plan with id : {id} Not Found"));
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProduct([FromBody] ProductPlanningDto planningDto)
+        public async Task<ActionResult> CreatePlan([FromBody] ProductPlanningDto planningDto)
         {
             if (!ModelState.IsValid)
             {
@@ -43,7 +45,7 @@ namespace Production.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductPlanningDto planningDto)
+        public async Task<ActionResult> UpdatePlan(int id, [FromBody] ProductPlanningDto planningDto)
         {
             if (!ModelState.IsValid)
             {
@@ -67,7 +69,7 @@ namespace Production.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<ActionResult> DeletePlan(int id)
         {
             try
             {
@@ -80,6 +82,16 @@ namespace Production.Api.Controllers
                 return NotFound(ex.Message);
             }
 
+        }
+
+        [HttpGet("Search")]
+        public async Task<ActionResult> Search([FromQuery] PlanSpecParams searchParams)
+        {
+            if (string.IsNullOrWhiteSpace(searchParams.Search)) return Ok(BadRequest("Please Enter Product Name"));
+
+            var products = await _productPlanning.Search(searchParams);
+
+            return Ok(products);
         }
     }
 }

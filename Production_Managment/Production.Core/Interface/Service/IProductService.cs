@@ -1,6 +1,6 @@
 ﻿using Production.Core.DataTransferObject;
 using Production.Core.Entities;
-using Production.Core.Specifications.Product;
+using Production.Core.Specifications;
 
 namespace Production.Core.Interface.Service
 {

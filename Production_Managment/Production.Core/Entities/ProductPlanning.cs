@@ -12,6 +12,12 @@
 
         public Product? Product { get; set; }
 
+        public string ProductName { get; set; }
 
+        public ProductPlanning()
+        {
+            // Initialize the collection to avoid null reference exception
+            Products = new List<Product>();
+        }
     }
 }

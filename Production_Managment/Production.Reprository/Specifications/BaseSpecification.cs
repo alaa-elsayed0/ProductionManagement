@@ -1,7 +1,7 @@
 ﻿using Production.Core.Interface.Specifications;
 using System.Linq.Expressions;
 
-namespace Production.Reprository.Specifications.Product
+namespace Production.Reprository.Specifications
 {
     public class BaseSpecification<T> : ISpecifications<T>
     {

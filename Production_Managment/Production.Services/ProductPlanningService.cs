@@ -3,19 +3,26 @@ using Production.Core.DataTransferObject;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
+using Production.Core.Specifications;
+using Production.Core.Specifications.Planning;
+using Production.Reprository.Specifications.Planning;
+using Production.Reprository.Specifications.Product;
 
 namespace Production.Services
 {
     public class ProductPlanningService : IProductPlanning
     {
-
+         
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<ProductPlanning, int> _repository;
 
-        public ProductPlanningService(IMapper mapper, IUnitOfWork unitOfWork)
+
+        public ProductPlanningService(IMapper mapper, IUnitOfWork unitOfWork, IGenericRepository<ProductPlanning, int> repository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
         public async Task<ProductPlanningDto> CreateAsync(ProductPlanningDto plan)
@@ -57,6 +64,7 @@ namespace Production.Services
             return _mapper.Map<ProductPlanningDto>(plan);
         }
 
+
         public async Task<ProductPlanningDto> UpdateAsync(ProductPlanningDto plan)
         {
             var existingPlan = await _unitOfWork.Repository<ProductPlanning, int>().GetAsync(plan.PlanningId);
@@ -70,6 +78,12 @@ namespace Production.Services
             await _unitOfWork.CompleteAsync();
 
             return _mapper.Map<ProductPlanningDto>(existingPlan);
+        }
+
+        public async Task<IEnumerable<ProductPlanning>> Search(PlanSpecParams specParams)
+        {
+            var spec = new PlanningSpecification(specParams);
+            return await _repository.GetAllWithSpecAsync(spec);
         }
     }
 }

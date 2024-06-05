@@ -3,9 +3,8 @@ using Production.Core.DataTransferObject;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
-using Production.Core.Specifications.Product;
-using Production.Reprository.Context;
-using Production.Reprository.Specifications;
+using Production.Core.Specifications;
+using Production.Reprository.Specifications.Product;
 
 namespace Production.Services
 {

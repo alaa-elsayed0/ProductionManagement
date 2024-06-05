@@ -30,6 +30,7 @@ builder.Services.AddScoped<IProductOperationService, ProductOperationService>();
 builder.Services.AddScoped<ITrackingService, TrackingService>();
 builder.Services.AddScoped<IStopRecordService, StopRecordService>();
 builder.Services.AddScoped<IGenericRepository<Product, int>, GenericRepository<Product, int>>();
+builder.Services.AddScoped<IGenericRepository<ProductPlanning, int>, GenericRepository<ProductPlanning, int>>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

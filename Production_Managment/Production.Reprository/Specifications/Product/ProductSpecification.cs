@@ -1,10 +1,8 @@
-﻿using Production.Core.Entities;
-using Production.Core.Specifications.Product;
-using System.Linq.Expressions;
+﻿using Production.Core.Specifications;
 
 namespace Production.Reprository.Specifications.Product
 {
-    public class ProductSpecification : BaseSpecification<Product>
+    public class ProductSpecification : BaseSpecification<Core.Entities.Product>
     {
         public ProductSpecification(ProductSpecificationParameters specs) : base(product => string.IsNullOrWhiteSpace(specs.Search) || product.Name.ToLower().Contains(specs.Search))
         {

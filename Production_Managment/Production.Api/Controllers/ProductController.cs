@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
-using Production.Core.Entities;
-using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Service;
-using Production.Core.Specifications.Product;
+using Production.Core.Specifications;
 
 namespace Production.Api.Controllers
 {

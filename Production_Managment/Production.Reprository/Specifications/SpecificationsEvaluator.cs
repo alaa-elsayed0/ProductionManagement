@@ -3,7 +3,7 @@ using Production.Core.Entities;
 using Production.Core.Interface.Specifications;
 using System.Linq;
 
-namespace Production.Reprository.Specifications.Product
+namespace Production.Reprository.Specifications
 {
     public class SpecificationsEvaluator<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {

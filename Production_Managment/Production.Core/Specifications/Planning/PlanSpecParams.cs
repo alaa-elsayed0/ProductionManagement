@@ -1,8 +1,8 @@
-﻿namespace Production.Core.Specifications.Product
+﻿namespace Production.Core.Specifications.Planning
 {
-    public class ProductSpecificationParameters
+    public class PlanSpecParams
     {
-        public string Name { get; set; }
+        public string ProductName { get; set; }
 
         private string? _search;
 

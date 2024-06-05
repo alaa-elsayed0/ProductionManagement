@@ -3,7 +3,7 @@ using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
 using Production.Core.Interface.Specifications;
 using Production.Reprository.Context;
-using Production.Reprository.Specifications.Product;
+using Production.Reprository.Specifications;
 
 namespace Production.Reprository.Repositories
 {
