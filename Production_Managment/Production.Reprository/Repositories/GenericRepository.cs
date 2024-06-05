@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Production.Core.Entities;
 using Production.Core.Interface.Repositories;
+using Production.Core.Interface.Specifications;
 using Production.Reprository.Context;
+using Production.Reprository.Specifications.Product;
 
 namespace Production.Reprository.Repositories
 {
@@ -24,5 +26,7 @@ namespace Production.Reprository.Repositories
 
         public async Task<TEntity> GetAsync(Tkey id) => (await _context.Set<TEntity>().FindAsync(id))!;
 
+        public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity> specifications)
+                    => await SpecificationsEvaluator<TEntity, Tkey>.BuildQuery(_context.Set<TEntity>(), specifications).ToListAsync();
     }
 }
