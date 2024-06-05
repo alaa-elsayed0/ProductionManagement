@@ -6,5 +6,7 @@
         public DateTime Date { get; set; }
         public int QuantityProduced { get; set; }
         public string Comments { get; set; }
+        public string ProductName { get; set; }
+
     }
-}
+} 

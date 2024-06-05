@@ -6,7 +6,7 @@ namespace Production.Reprository.Specifications.Record
 {
     public class StopRecordsSpecification : BaseSpecification<StopRecords>
     {
-        public StopRecordsSpecification(RecordsSpecificationParams specs) : base(record => string.IsNullOrWhiteSpace(specs.Search) || record.ProdactName.ToLower().Contains(specs.Search))
+        public StopRecordsSpecification(RecordsSpecificationParams specs) : base(record => string.IsNullOrWhiteSpace(specs.Search) || record.ProductName.ToLower().Contains(specs.Search))
         {
         }
     }
