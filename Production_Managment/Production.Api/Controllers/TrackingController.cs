@@ -2,9 +2,7 @@
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
 using Production.Core.Interface.Service;
-using Production.Core.Specifications.Operation;
 using Production.Core.Specifications.Tracking;
-using Production.Services;
 
 namespace Production.Api.Controllers
 {
@@ -19,12 +17,14 @@ namespace Production.Api.Controllers
             _trackingService = trackingService;
         }
 
+        //Retrieve All Tracks
         [HttpGet]
         public async Task<ActionResult> GetProducts()
         {
             return Ok(await _trackingService.GetAllTracks());
         }
 
+        //Retrieve One Track By Id
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProduct(int id)
         {
@@ -32,6 +32,7 @@ namespace Production.Api.Controllers
             return tracking is not null ? Ok(tracking) : NotFound(new ApiResponse(404, $"Product with id : {id} Not Found"));
         }
 
+        // Create New Track
         [HttpPost]
         public async Task<ActionResult> CreateProduct([FromBody] TrackingDto trackingDto)
         {
@@ -44,6 +45,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Update Existing Track
         [HttpPut]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] TrackingDto trackingDto)
         {
@@ -52,7 +54,7 @@ namespace Production.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != trackingDto.TrackingId)
+            if (id != trackingDto.Id)
             {
                 return BadRequest("Product ID mismatch.");
             }
@@ -68,6 +70,7 @@ namespace Production.Api.Controllers
             }
         }
 
+        // Delete Track
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -85,6 +88,7 @@ namespace Production.Api.Controllers
         }
 
 
+        // Search 
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] TrackingSpecificationParams searchParams)
         {

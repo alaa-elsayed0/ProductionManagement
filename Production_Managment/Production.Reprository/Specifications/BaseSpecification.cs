@@ -5,6 +5,7 @@ namespace Production.Reprository.Specifications
 {
     public class BaseSpecification<T> : ISpecifications<T>
     {
+        //Where
         public Expression<Func<T, bool>> Criteria { get; }
 
         public BaseSpecification(Expression<Func<T, bool>> criteria)
@@ -12,6 +13,7 @@ namespace Production.Reprository.Specifications
             Criteria = criteria;
         }
 
+        //Include
         public List<Expression<Func<T, object>>> IncludeExpressions { get; } = new();
     }
 }

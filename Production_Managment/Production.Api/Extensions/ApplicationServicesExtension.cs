@@ -35,6 +35,7 @@ namespace Production.Api.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
+            //Error Handling
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>

@@ -17,12 +17,14 @@ namespace Production.Api.Controllers
             _productService = productService;
         }
 
+        //Retrieve All Operations
         [HttpGet]
         public async Task<ActionResult> GetProducts()
         {
             return Ok(await _productService.GetAllProducts());
         }
 
+        //Retrieve One Product By Id
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProduct(int id) 
         {
@@ -30,6 +32,7 @@ namespace Production.Api.Controllers
             return product is not null ? Ok(product) : NotFound(new ApiResponse(404, $"Product with id : {id} Not Found"));
         }
 
+        // Create New Product
         [HttpPost]
         public async Task<ActionResult> CreateProduct([FromBody] ProductDto productDto)
         {
@@ -42,6 +45,7 @@ namespace Production.Api.Controllers
             
         }
 
+        // Update Existing Product
         [HttpPut]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductDto productDto)
         {
@@ -50,7 +54,7 @@ namespace Production.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != productDto.ProductId)
+            if (id != productDto.Id)
             {
                 return BadRequest("Product ID mismatch.");
             }
@@ -66,6 +70,7 @@ namespace Production.Api.Controllers
             }
         }
 
+        // Delete Product
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id) 
         {
@@ -82,6 +87,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Search 
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] ProductSpecificationParameters searchParams)
         {

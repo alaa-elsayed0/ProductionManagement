@@ -19,12 +19,14 @@ namespace Production.Api.Controllers
             _productPlanning = productPlanning;
         }
 
+        //Retrieve All Plans
         [HttpGet]
         public async Task<ActionResult> GetPlans()
         {
             return Ok(await _productPlanning.GetAllPlans());
         }
 
+        //Retrieve One Plan By Id
         [HttpGet("{id}")]
         public async Task<ActionResult> GetPlan(int id)
         {
@@ -32,6 +34,7 @@ namespace Production.Api.Controllers
             return product is not null ? Ok(product) : NotFound(new ApiResponse(404, $"Plan with id : {id} Not Found"));
         }
 
+        // Create New Plan
         [HttpPost]
         public async Task<ActionResult> CreatePlan([FromBody] ProductPlanningDto planningDto)
         {
@@ -44,6 +47,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Update Existing Plan
         [HttpPut]
         public async Task<ActionResult> UpdatePlan(int id, [FromBody] ProductPlanningDto planningDto)
         {
@@ -52,7 +56,7 @@ namespace Production.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != planningDto.PlanningId)
+            if (id != planningDto.Id)
             {
                 return BadRequest("Product ID mismatch.");
             }
@@ -68,6 +72,7 @@ namespace Production.Api.Controllers
             }
         }
 
+        // Delete Plan
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePlan(int id)
         {
@@ -84,6 +89,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Search 
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] PlanSpecParams searchParams)
         {

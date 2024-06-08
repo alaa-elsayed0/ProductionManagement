@@ -17,12 +17,14 @@ namespace Production.Api.Controllers
             _productOperationService = productOperationService;
         }
 
+        //Retrieve All Operations
         [HttpGet]
         public async Task<ActionResult> GetOperations()
         {
             return Ok(await _productOperationService.GetAllProducts());
         }
 
+        //Retrieve One Operation By Id
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOperation(int id)
         {
@@ -30,6 +32,7 @@ namespace Production.Api.Controllers
             return operation is not null ? Ok(operation) : NotFound(new ApiResponse(404, $"Product with id : {id} Not Found"));
         }
 
+        // Create New Operation
         [HttpPost]
         public async Task<ActionResult> CreateOperation([FromBody] ProductionOperationsDto operationDto)
         {
@@ -42,6 +45,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Update Existing Operation
         [HttpPut]
         public async Task<ActionResult> UpdateOperation(int id, [FromBody] ProductionOperationsDto operationDto)
         {
@@ -50,7 +54,7 @@ namespace Production.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != operationDto.OperationId)
+            if (id != operationDto.Id)
             {
                 return BadRequest("Product ID mismatch.");
             }
@@ -66,8 +70,9 @@ namespace Production.Api.Controllers
             }
         }
 
+        // Delete Operation
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<ActionResult> DeleteOperation(int id)
         {
             try
             {
@@ -82,7 +87,7 @@ namespace Production.Api.Controllers
 
         }
 
-
+        // Search 
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] OperationSpecificationParameters searchParams)
         {

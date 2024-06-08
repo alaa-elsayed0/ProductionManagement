@@ -2,9 +2,7 @@
 using Production.Api.Errors;
 using Production.Core.DataTransferObject;
 using Production.Core.Interface.Service;
-using Production.Core.Specifications.Operation;
 using Production.Core.Specifications.StopRecords;
-using Production.Services;
 
 namespace Production.Api.Controllers
 {
@@ -19,12 +17,14 @@ namespace Production.Api.Controllers
             _stopRecordService = stopRecordService;
         }
 
+        //Retrieve All Stop Records
         [HttpGet]
         public async Task<ActionResult> GetProducts()
         {
             return Ok(await _stopRecordService.GetAllRecords());
         }
 
+        //Retrieve One Stop Records By Id
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProduct(int id)
         {
@@ -32,6 +32,7 @@ namespace Production.Api.Controllers
             return product is not null ? Ok(product) : NotFound(new ApiResponse(404, $"Record with id : {id} Not Found"));
         }
 
+        // Create New Stop Records
         [HttpPost]
         public async Task<ActionResult> CreateProduct([FromBody] StopRecordsDto recordDto)
         {
@@ -44,6 +45,7 @@ namespace Production.Api.Controllers
 
         }
 
+        // Update Existing Stop Records
         [HttpPut]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] StopRecordsDto recordDto)
         {
@@ -52,7 +54,7 @@ namespace Production.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != recordDto.StopRecordsId)
+            if (id != recordDto.Id)
             {
                 return BadRequest("Product ID mismatch.");
             }
@@ -68,6 +70,7 @@ namespace Production.Api.Controllers
             }
         }
 
+        // Delete Stop Records
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -85,6 +88,7 @@ namespace Production.Api.Controllers
         }
 
 
+        // Search 
         [HttpGet("Search")]
         public async Task<ActionResult> Search([FromQuery] RecordsSpecificationParams searchParams)
         {

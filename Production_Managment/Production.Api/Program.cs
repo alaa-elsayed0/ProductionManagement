@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Add Application Service from Extension Folder
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
