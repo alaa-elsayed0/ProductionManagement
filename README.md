@@ -8,11 +8,14 @@ while in  Production Operation is by Operation Type
 
 ### Prerequistes
 [.Net 8.0]
+
 [SQL Server]
 
 ## Installation 
 In Production.Api => "Microsoft.EntityFrameworkCore.Design" Version="8.0.6"
+
 In Production.Repository => "Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6"
+
                         => "Microsoft.EntityFrameworkCore.Tools" Version="8.0.6"
 
 In Production.Services => "AutoMapper" Version="13.0.1"
