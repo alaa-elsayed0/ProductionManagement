@@ -25,3 +25,7 @@ In Production.Services => "AutoMapper" Version="13.0.1"
 
 ## Notes
 You don't have to 'Update-Database'. I already make command that make Apply All Migtations and Update DataBase if it is not exist  
+
+
+## Important
+Dont Forget to change {BaseUrl} in appsetting Based on your project url
