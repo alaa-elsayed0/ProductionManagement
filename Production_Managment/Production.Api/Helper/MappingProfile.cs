@@ -9,7 +9,8 @@ namespace Production.Api.Helper
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<ProductPlanning, ProductPlanningDto>().ReverseMap();
+            CreateMap<ProductPlanning, ProductPlanningDto>()
+                .ForMember(d => d.ProductName , o => o.MapFrom(s => s.Product.Name));
             CreateMap<Tracking, TrackingDto>().ReverseMap();
             CreateMap<StopRecords, StopRecordsDto>().ReverseMap();
             CreateMap<ProductionOperation, ProductionOperationsDto>().ReverseMap();
